@@ -1,0 +1,50 @@
+services:
+  broker:
+    build: .
+    command: ["/usr/local/bin/broker"]
+    environment:
+      - HTTP_ADDR=:8080
+      - DATA_DIR=/srv/data
+      - ACK_TIMEOUT_SEC=15
+      - MAX_DELIVERIES=3
+    ports:
+      - "8080:8080"
+    volumes:
+      - broker_data:/srv/data
+
+  publisher:
+    build: .
+    command: ["/usr/local/bin/publisher"]
+    depends_on:
+      - broker
+    environment:
+      - BROKER_URL=http://broker:8080
+      - STREAM_NAME=events
+      - STREAM_TYPE=queue
+      - QUEUE_MODE=fifo
+      - INTERVAL_SEC=2
+
+  subscriber-a:
+    build: .
+    command: ["/usr/local/bin/subscriber"]
+    depends_on:
+      - broker
+    environment:
+      - BROKER_URL=http://broker:8080
+      - STREAM_NAME=events
+      - STREAM_TYPE=queue
+      - SUBSCRIBER_NAME=subscriber-a
+
+  subscriber-b:
+    build: .
+    command: ["/usr/local/bin/subscriber"]
+    depends_on:
+      - broker
+    environment:
+      - BROKER_URL=http://broker:8080
+      - STREAM_NAME=events
+      - STREAM_TYPE=queue
+      - SUBSCRIBER_NAME=subscriber-b
+
+volumes:
+  broker_data:
