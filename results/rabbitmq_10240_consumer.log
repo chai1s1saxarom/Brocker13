@@ -1,0 +1,57 @@
+2026-04-24 14:38:00,103 - INFO - Запуск потребителя с параметрами: broker=rabbitmq, duration=60s
+2026-04-24 14:38:00,118 - INFO - Pika version 1.3.2 connecting to ('::1', 5672, 0, 0)
+2026-04-24 14:38:00,119 - INFO - Socket connected: <socket.socket fd=876, family=23, type=1, proto=6, laddr=('::1', 49674, 0, 0), raddr=('::1', 5672, 0, 0)>
+2026-04-24 14:38:00,120 - INFO - Streaming transport linked up: (<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x00000223BA1A5400>, _StreamingProtocolShim: <SelectConnection PROTOCOL transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x00000223BA1A5400> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>).
+2026-04-24 14:38:00,181 - INFO - AMQPConnector - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x00000223BA1A5400> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+2026-04-24 14:38:00,181 - INFO - AMQPConnectionWorkflow - reporting success: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x00000223BA1A5400> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+2026-04-24 14:38:00,181 - INFO - Connection workflow succeeded: <SelectConnection OPEN transport=<pika.adapters.utils.io_services_utils._AsyncPlaintextTransport object at 0x00000223BA1A5400> params=<ConnectionParameters host=localhost port=5672 virtual_host=/ ssl=False>>
+2026-04-24 14:38:00,182 - INFO - Created channel=1
+2026-04-24 14:38:00,191 - INFO - Запуск потребления RabbitMQ на 60 секунд...
+2026-04-24 14:38:07,782 - INFO - RabbitMQ: обработано сообщений 1000, avg latency: 2.2969 sec, max latency: 3.9561 sec
+2026-04-24 14:38:31,562 - INFO - RabbitMQ: обработано сообщений 2000, avg latency: 2.6356 sec, max latency: 4.5801 sec
+2026-04-24 15:09:56,560 - INFO - Connection is idle, 1 stale byte intervals
+2026-04-24 15:09:56,561 - INFO - Aborting transport connection: state=1; <socket.socket fd=876, family=23, type=1, proto=6, laddr=('::1', 49674, 0, 0), raddr=('::1', 5672, 0, 0)>
+2026-04-24 15:09:56,561 - INFO - _AsyncTransportBase._initate_abort(): Initiating abrupt asynchronous transport shutdown: state=1; error=None; <socket.socket fd=876, family=23, type=1, proto=6, laddr=('::1', 49674, 0, 0), raddr=('::1', 5672, 0, 0)>
+2026-04-24 15:09:56,561 - INFO - Deactivating transport: state=1; <socket.socket fd=876, family=23, type=1, proto=6, laddr=('::1', 49674, 0, 0), raddr=('::1', 5672, 0, 0)>
+2026-04-24 15:09:56,642 - INFO - AMQP stack terminated, failed to connect, or aborted: opened=True, error-arg=None; pending-error=AMQPHeartbeatTimeout: ('No activity or too many missed heartbeats in the last 60 seconds',)
+2026-04-24 15:09:56,644 - INFO - Stack terminated due to AMQPHeartbeatTimeout: ('No activity or too many missed heartbeats in the last 60 seconds',)
+2026-04-24 15:09:56,645 - INFO - Closing transport socket and unlinking: state=3; <socket.socket fd=876, family=23, type=1, proto=6, laddr=('::1', 49674, 0, 0), raddr=('::1', 5672, 0, 0)>
+2026-04-24 15:09:56,736 - ERROR - Unexpected connection close detected: AMQPHeartbeatTimeout: ('No activity or too many missed heartbeats in the last 60 seconds',)
+Traceback (most recent call last):
+  File "C:\Users\alena\Desktop\practice_1\consumer.py", line 41, in consume_rabbitmq
+    channel.start_consuming()
+    ~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\alena\AppData\Roaming\Python\Python313\site-packages\pika\adapters\blocking_connection.py", line 1883, in start_consuming
+    self._process_data_events(time_limit=None)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^
+  File "C:\Users\alena\AppData\Roaming\Python\Python313\site-packages\pika\adapters\blocking_connection.py", line 2044, in _process_data_events
+    self.connection.process_data_events(time_limit=time_limit)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alena\AppData\Roaming\Python\Python313\site-packages\pika\adapters\blocking_connection.py", line 842, in process_data_events
+    self._flush_output(common_terminator)
+    ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alena\AppData\Roaming\Python\Python313\site-packages\pika\adapters\blocking_connection.py", line 523, in _flush_output
+    raise self._closed_result.value.error
+pika.exceptions.AMQPHeartbeatTimeout: No activity or too many missed heartbeats in the last 60 seconds
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\alena\Desktop\practice_1\consumer.py", line 116, in <module>
+    count, dur = consume_rabbitmq(args.host, args.queue, args.duration)
+                 ~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\alena\Desktop\practice_1\consumer.py", line 46, in consume_rabbitmq
+    channel.stop_consuming()
+    ~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\alena\AppData\Roaming\Python\Python313\site-packages\pika\adapters\blocking_connection.py", line 1896, in stop_consuming
+    self._cancel_all_consumers()
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~^^
+  File "C:\Users\alena\AppData\Roaming\Python\Python313\site-packages\pika\adapters\blocking_connection.py", line 1497, in _cancel_all_consumers
+    self.basic_cancel(consumer_tag)
+    ~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^
+  File "C:\Users\alena\AppData\Roaming\Python\Python313\site-packages\pika\adapters\blocking_connection.py", line 1774, in basic_cancel
+    assert (consumer_info.cancelled_by_broker or
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+            consumer_tag in self._impl._consumers), consumer_tag
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+AssertionError: ctag1.24c22de34a1c4d318cfbe879c11634e8
