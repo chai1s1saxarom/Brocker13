@@ -1,0 +1,25 @@
+Session A:
+T1: updated Alice to 50, but did not commit
++----+------------+---------+
+| id | owner_name | balance |
++----+------------+---------+
+|  1 | Alice      |      50 |
++----+------------+---------+
+
+Session B:
+T2: dirty read, sees uncommitted Alice balance
++----+------------+---------+
+| id | owner_name | balance |
++----+------------+---------+
+|  1 | Alice      |      50 |
++----+------------+---------+
+
+Session A:
+T1: rollback, Alice is back to committed value
++----+------------+---------+
+| id | owner_name | balance |
++----+------------+---------+
+|  1 | Alice      |     100 |
++----+------------+---------+
+
+Result: Session B read balance = 50, but this value was never committed.

@@ -1,0 +1,33 @@
+Session A:
+T1: read Bob balance = 100, application calculates 100 - 10 = 90
++----+------------+---------+
+| id | owner_name | balance |
++----+------------+---------+
+|  2 | Bob        |     100 |
++----+------------+---------+
+
+Session B:
+T2: also reads Bob balance = 100, application calculates 100 - 30 = 70
++----+------------+---------+
+| id | owner_name | balance |
++----+------------+---------+
+|  2 | Bob        |     100 |
++----+------------+---------+
+
+Session B:
+T2: committed Bob balance = 70
++----+------------+---------+
+| id | owner_name | balance |
++----+------------+---------+
+|  2 | Bob        |      70 |
++----+------------+---------+
+
+Session A:
+T1: final value is 90, so T2 update to 70 was lost
++----+------------+---------+
+| id | owner_name | balance |
++----+------------+---------+
+|  2 | Bob        |      90 |
++----+------------+---------+
+
+Result: final balance is 90 instead of expected 60, because Session A overwrote Session B.

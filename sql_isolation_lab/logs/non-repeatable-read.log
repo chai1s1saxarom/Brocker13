@@ -1,0 +1,25 @@
+Session A:
+T1: first read of Alice balance
++----+------------+---------+
+| id | owner_name | balance |
++----+------------+---------+
+|  1 | Alice      |     100 |
++----+------------+---------+
+
+Session B:
+T2: committed Alice balance = 150
++----+------------+---------+
+| id | owner_name | balance |
++----+------------+---------+
+|  1 | Alice      |     150 |
++----+------------+---------+
+
+Session A:
+T1: second read of the same row in the same transaction
++----+------------+---------+
+| id | owner_name | balance |
++----+------------+---------+
+|  1 | Alice      |     150 |
++----+------------+---------+
+
+Result: one transaction read the same row twice and got different values.

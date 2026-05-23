@@ -1,0 +1,26 @@
+Session A:
+T1: first count of active bookings for room 101
++-----------------+
+| active_bookings |
++-----------------+
+|               1 |
++-----------------+
+
+Session B:
+T2: inserted and committed a new row matching T1 predicate
++----+---------+------------------+--------+
+| id | room_id | customer_name    | status |
++----+---------+------------------+--------+
+|  1 |     101 | Initial customer | active |
+|  3 |     101 | Phantom customer | active |
++----+---------+------------------+--------+
+
+Session A:
+T1: second count of the same predicate in the same transaction
++-----------------+
+| active_bookings |
++-----------------+
+|               2 |
++-----------------+
+
+Result: a repeated predicate read returned a new row that did not exist in the first read.
