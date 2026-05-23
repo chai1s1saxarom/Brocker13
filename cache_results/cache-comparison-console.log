@@ -1,0 +1,11 @@
+workload     | strategy      | metrics
+--------------------------------------------------------------------------------------------------------
+read-heavy  | lazy-loading  | throughput=13455.44 req/s | avg= 0.074 ms | db_ops= 1646 | hit_rate= 55.63% | pending_max=  0 | flushes= 0
+read-heavy  | write-through | throughput=14556.80 req/s | avg= 0.068 ms | db_ops= 1331 | hit_rate= 68.57% | pending_max=  0 | flushes= 0
+read-heavy  | write-back    | throughput=25550.77 req/s | avg= 0.038 ms | db_ops= 1251 | hit_rate= 68.57% | pending_max=250 | flushes= 2
+balanced    | lazy-loading  | throughput= 7736.97 req/s | avg= 0.129 ms | db_ops= 2506 | hit_rate= 34.14% | pending_max=  0 | flushes= 0
+balanced    | write-through | throughput= 8592.23 req/s | avg= 0.116 ms | db_ops= 2023 | hit_rate= 67.52% | pending_max=  0 | flushes= 0
+balanced    | write-back    | throughput=27673.74 req/s | avg= 0.036 ms | db_ops= 1820 | hit_rate= 67.52% | pending_max=250 | flushes= 6
+write-heavy | lazy-loading  | throughput= 6157.26 req/s | avg= 0.162 ms | db_ops= 2914 | hit_rate= 13.37% | pending_max=  0 | flushes= 0
+write-heavy | write-through | throughput= 6397.04 req/s | avg= 0.155 ms | db_ops= 2560 | hit_rate= 68.43% | pending_max=  0 | flushes= 0
+write-heavy | write-back    | throughput=28615.47 req/s | avg= 0.034 ms | db_ops= 2271 | hit_rate= 68.43% | pending_max=250 | flushes= 9
